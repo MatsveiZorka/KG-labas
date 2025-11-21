@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изучение цветовых моделей</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Изучение цветовых моделей</h1>
+        
+        <div class="color-display">
+            <div class="color-box" id="colorBox"></div>
+            <div class="color-hex" id="colorHex">#FFFFFF</div>
+        </div>
+
+
+
+
+        <div class="color-models">
+            <div class="model-section">
+                <h2>RGB</h2>
+                <div class="slider-group">
+                    <label>R: <span id="rgbRValue">255</span></label>
+                    <input type="range" min="0" max="255" value="255" class="slider" id="rgbR">
+                    <input type="number" min="0" max="255" value="255" id="rgbRInput">
+                </div>
+                <div class="slider-group">
+                    <label>G: <span id="rgbGValue">255</span></label>
+                    <input type="range" min="0" max="255" value="255" class="slider" id="rgbG">
+                    <input type="number" min="0" max="255" value="255" id="rgbGInput">
+                </div>
+                <div class="slider-group">
+                    <label>B: <span id="rgbBValue">255</span></label>
+                    <input type="range" min="0" max="255" value="255" class="slider" id="rgbB">
+                    <input type="number" min="0" max="255" value="255" id="rgbBInput">
+                </div>
+            </div>
+
+
+
+            <div class="model-section">
+                <h2>CMYK</h2>
+                <div class="slider-group">
+                    <label>C: <span id="cmykCValue">0</span>%</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="cmykC">
+                    <input type="number" min="0" max="100" value="0" id="cmykCInput">%
+                </div>
+                <div class="slider-group">
+                    <label>M: <span id="cmykMValue">0</span>%</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="cmykM">
+                    <input type="number" min="0" max="100" value="0" id="cmykMInput">%
+                </div>
+                <div class="slider-group">
+                    <label>Y: <span id="cmykYValue">0</span>%</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="cmykY">
+                    <input type="number" min="0" max="100" value="0" id="cmykYInput">%
+                </div>
+                <div class="slider-group">
+                    <label>K: <span id="cmykKValue">0</span>%</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="cmykK">
+                    <input type="number" min="0" max="100" value="0" id="cmykKInput">%
+                </div>
+            </div>
+
+
+
+
+
+            <div class="model-section">
+                <h2>HSV</h2>
+                <div class="slider-group">
+                    <label>H: <span id="hsvHValue">0</span>°</label>
+                    <input type="range" min="0" max="360" value="0" class="slider" id="hsvH">
+                    <input type="number" min="0" max="360" value="0" id="hsvHInput">%
+                </div>
+                <div class="slider-group">
+                    <label>S: <span id="hsvSValue">0</span>%</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="hsvS">
+                     <input type="number" min="0" max="100" value="0" id="hsvSInput">%
+                </div>
+                <div class="slider-group">
+                    <label>V: <span id="hsvVValue">100</span>%</label>
+                    <input type="range" min="0" max="100" value="100" class="slider" id="hsvV">
+                    <input type="number" min="0" max="100" value="100" id="hsvVInput">%
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="color-picker-section">
+            <h2>Палитра цветов</h2>
+            <input type="color" id="colorPicker" value="#ffffff">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

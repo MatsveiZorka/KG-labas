@@ -22,33 +22,38 @@ class ColorConverter {
     }
 
     static rgbToHsv(r, g, b) {
-        r = r / 255;
-        g = g / 255;
-        b = b / 255;
-        
-        let max = Math.max(r, g, b);
-        let min = Math.min(r, g, b);
-        let delta = max - min;
-        
-        let h = 0;
-        let s = max === 0 ? 0 : delta / max;
-        let v = max;
-        
-        if (delta !== 0) {
-            switch (max) {
-                case r: h = (g - b) / delta + (g < b ? 6 : 0); break;
-                case g: h = (b - r) / delta + 2; break;
-                case b: h = (r - g) / delta + 4; break;
+            r = r / 255;
+            
+            b = b / 255;
+
+            g = g / 255;
+                
+            let max = Math.max(r, g, b);
+            let min = Math.min(r, g, b);
+            let delta = max - min;
+                
+            let h, s, v = max;
+                
+            if (delta === 0) {
+                h = 0;
+            } else {
+                switch (max) {
+                    case r: h = ((g - b) / delta) % 6; break;
+                    case g: h = (b - r) / delta + 2; break;
+                    case b: h = (r - g) / delta + 4; break;
+                }
+                h = Math.round(h * 60);
+                if (h < 0) h += 360;
             }
-            h /= 6;
+                
+            s = max === 0 ? 0 : delta / max;
+                
+            return [
+                Math.round(h),
+                Math.round(s * 100),
+                Math.round(v * 100)
+            ];
         }
-        
-        return [
-            Math.round(h * 360),
-            Math.round(s * 100),
-            Math.round(v * 100)
-        ];
-    }
 
     static rgbToHex(r, g, b) {
         return "#" + [r, g, b].map(x => {
@@ -357,4 +362,5 @@ class ColorApp {
 
 document.addEventListener('DOMContentLoaded', () => {
     new ColorApp();
+
 });

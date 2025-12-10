@@ -22,38 +22,36 @@ class ColorConverter {
     }
 
     static rgbToHsv(r, g, b) {
-            r = r / 255;
+        r = r / 255;
+        b = b / 255;
+        g = g / 255;
             
-            b = b / 255;
-
-            g = g / 255;
-                
-            let max = Math.max(r, g, b);
-            let min = Math.min(r, g, b);
-            let delta = max - min;
-                
-            let h, s, v = max;
-                
-            if (delta === 0) {
-                h = 0;
-            } else {
-                switch (max) {
-                    case r: h = ((g - b) / delta) % 6; break;
-                    case g: h = (b - r) / delta + 2; break;
-                    case b: h = (r - g) / delta + 4; break;
-                }
-                h = Math.round(h * 60);
-                if (h < 0) h += 360;
+        let max = Math.max(r, g, b);
+        let min = Math.min(r, g, b);
+        let delta = max - min;
+            
+        let h, s, v = max;
+            
+        if (delta === 0) {
+            h = 0;
+        } else {
+            switch (max) {
+                case r: h = ((g - b) / delta) % 6; break;
+                case g: h = (b - r) / delta + 2; break;
+                case b: h = (r - g) / delta + 4; break;
             }
-                
-            s = max === 0 ? 0 : delta / max;
-                
-            return [
-                Math.round(h),
-                Math.round(s * 100),
-                Math.round(v * 100)
-            ];
+            h = Math.round(h * 60);
+            if (h < 0) h += 360;
         }
+            
+        s = max === 0 ? 0 : delta / max;
+            
+        return [
+            Math.round(h),
+            Math.round(s * 100),
+            Math.round(v * 100)
+        ];
+    }
 
     static rgbToHex(r, g, b) {
         return "#" + [r, g, b].map(x => {
@@ -61,8 +59,6 @@ class ColorConverter {
             return hex.length === 1 ? "0" + hex : hex;
         }).join("");
     }
-
-
 
     // в ргб
 
@@ -121,25 +117,16 @@ class ColorConverter {
     }
 }
 
-
-
-
-
-
-
-
 class ColorApp {
     constructor() {
         this.currentRgb = [255, 255, 255];
+        this.updatingSource = null;
         this.initializeElements();
         this.setupEventListeners();
         this.updateAllDisplays();
     }
 
-    
-
     initializeElements() {
-        // rgb
         this.rgbR = document.getElementById('rgbR');
         this.rgbG = document.getElementById('rgbG');
         this.rgbB = document.getElementById('rgbB');
@@ -151,7 +138,6 @@ class ColorApp {
         this.rgbBValue = document.getElementById('rgbBValue');
 
 
-        // cmyk
         this.cmykC = document.getElementById('cmykC');
         this.cmykM = document.getElementById('cmykM');
         this.cmykY = document.getElementById('cmykY');
@@ -165,7 +151,7 @@ class ColorApp {
         this.cmykYValue = document.getElementById('cmykYValue');
         this.cmykKValue = document.getElementById('cmykKValue');
 
-        // gsv
+
         this.hsvH = document.getElementById('hsvH');
         this.hsvS = document.getElementById('hsvS');
         this.hsvV = document.getElementById('hsvV');
@@ -177,127 +163,185 @@ class ColorApp {
         this.hsvVValue = document.getElementById('hsvVValue');
 
 
-        // hex
         this.colorBox = document.getElementById('colorBox');
         this.colorHex = document.getElementById('colorHex');
         this.colorPicker = document.getElementById('colorPicker');
     }
 
     setupEventListeners() {
-        // rgb
+
         [this.rgbR, this.rgbG, this.rgbB].forEach(slider => {
-            slider.addEventListener('input', (e) => this.onRgbChange());
+            slider.addEventListener('input', (e) => this.onRgbSliderChange(e));
         });
+
 
         [this.rgbRInput, this.rgbGInput, this.rgbBInput].forEach(input => {
-            input.addEventListener('input', (e) => this.onRgbInputChange());
+            input.addEventListener('input', (e) => this.onRgbInputChange(e));
         });
 
-        // cmyk
+
         [this.cmykC, this.cmykM, this.cmykY, this.cmykK].forEach(slider => {
-            slider.addEventListener('input', (e) => this.onCmykChange());
+            slider.addEventListener('input', (e) => this.onCmykSliderChange(e));
         });
+        
+
         [this.cmykCInput, this.cmykMInput, this.cmykYInput, this.cmykKInput].forEach(input => {
-            input.addEventListener('input', (e) => this.onCmykInputChange());
+            input.addEventListener('input', (e) => this.onCmykInputChange(e));
         });
 
-        // hsv
+
         [this.hsvH, this.hsvS, this.hsvV].forEach(slider => {
-            slider.addEventListener('input', (e) => this.onHsvChange());
+            slider.addEventListener('input', (e) => this.onHsvSliderChange(e));
         });
+        
+
         [this.hsvHInput, this.hsvSInput, this.hsvVInput].forEach(input => {
-            input.addEventListener('input', (e) => this.onHsvInputChange());
+            input.addEventListener('input', (e) => this.onHsvInputChange(e));
         });
 
-        // палитра
-        this.colorPicker.addEventListener('input', (e) => this.onColorPickerChange());
+
+        this.colorPicker.addEventListener('input', (e) => this.onColorPickerChange(e));
     }
 
-    onRgbChange() {
+    onRgbSliderChange(e) {
+        if (this.updatingSource === 'cmyk' || this.updatingSource === 'hsv' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'rgb';
         const r = parseInt(this.rgbR.value);
         const g = parseInt(this.rgbG.value);
         const b = parseInt(this.rgbB.value);
         
         this.updateFromRgb(r, g, b);
+        this.updatingSource = null;
     }
 
-    onRgbInputChange() {
+    onRgbInputChange(e) {
+        if (this.updatingSource === 'cmyk' || this.updatingSource === 'hsv' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'rgb';
         const r = Math.min(255, Math.max(0, parseInt(this.rgbRInput.value) || 0));
         const g = Math.min(255, Math.max(0, parseInt(this.rgbGInput.value) || 0));
         const b = Math.min(255, Math.max(0, parseInt(this.rgbBInput.value) || 0));
         
         this.updateFromRgb(r, g, b);
+        this.updatingSource = null;
     }
 
-    onCmykChange() {
+    onCmykSliderChange(e) {
+        if (this.updatingSource === 'rgb' || this.updatingSource === 'hsv' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'cmyk';
         const c = parseInt(this.cmykC.value);
         const m = parseInt(this.cmykM.value);
         const y = parseInt(this.cmykY.value);
         const k = parseInt(this.cmykK.value);
         
         this.updateFromCmyk(c, m, y, k);
+        this.updatingSource = null;
     }
 
-    onCmykInputChange() {
+    onCmykInputChange(e) {
+        if (this.updatingSource === 'rgb' || this.updatingSource === 'hsv' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'cmyk';
         const c = Math.min(100, Math.max(0, parseInt(this.cmykCInput.value) || 0));
         const m = Math.min(100, Math.max(0, parseInt(this.cmykMInput.value) || 0));
         const y = Math.min(100, Math.max(0, parseInt(this.cmykYInput.value) || 0));
         const k = Math.min(100, Math.max(0, parseInt(this.cmykKInput.value) || 0));
         
         this.updateFromCmyk(c, m, y, k);
+        this.updatingSource = null;
     }
 
-    onHsvChange() {
+    onHsvSliderChange(e) {
+        if (this.updatingSource === 'rgb' || this.updatingSource === 'cmyk' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'hsv';
         const h = parseInt(this.hsvH.value);
         const s = parseInt(this.hsvS.value);
         const v = parseInt(this.hsvV.value);
         
         this.updateFromHsv(h, s, v);
+        this.updatingSource = null;
     }
 
-    onHsvInputChange() {
+    onHsvInputChange(e) {
+        if (this.updatingSource === 'rgb' || this.updatingSource === 'cmyk' || this.updatingSource === 'hex') return;
+        
+        this.updatingSource = 'hsv';
         const h = Math.min(360, Math.max(0, parseInt(this.hsvHInput.value) || 0));
         const s = Math.min(100, Math.max(0, parseInt(this.hsvSInput.value) || 0));
         const v = Math.min(100, Math.max(0, parseInt(this.hsvVInput.value) || 0));
         
         this.updateFromHsv(h, s, v);
+        this.updatingSource = null;
     }
 
-    onColorPickerChange() {
+    onColorPickerChange(e) {
+        if (this.updatingSource === 'rgb' || this.updatingSource === 'cmyk' || this.updatingSource === 'hsv') return;
+    
+        this.updatingSource = 'hex';
         const hex = this.colorPicker.value;
         const rgb = ColorConverter.hexToRgb(hex);
-        this.updateFromRgb(rgb[0], rgb[1], rgb[2]);
+    
+
+        this.updateFromRgbForHex(rgb[0], rgb[1], rgb[2]);
+    
+        this.updatingSource = null;
     }
 
 
-
-
-
-
-
+    updateFromRgbForHex(r, g, b) {
+        this.currentRgb = [r, g, b];
+       
+        this.updateAllDisplays();
+    }
 
     // апдейты
 
     updateFromRgb(r, g, b) {
         this.currentRgb = [r, g, b];
-        this.updateAllDisplays();
+        this.updateDisplaysExcept('rgb');
     }
 
     updateFromCmyk(c, m, y, k) {
         const rgb = ColorConverter.cmykToRgb(c, m, y, k);
         this.currentRgb = rgb;
-        this.updateAllDisplays();
+        this.updateDisplaysExcept('cmyk');
     }
 
     updateFromHsv(h, s, v) {
         const rgb = ColorConverter.hsvToRgb(h, s, v);
         this.currentRgb = rgb;
-        this.updateAllDisplays();
+        this.updateDisplaysExcept('hsv');
+    }
+
+    updateDisplaysExcept(excludeModel) {
+        const [r, g, b] = this.currentRgb;
+        
+        // обновляем RGB, если это не источник изменений
+        if (excludeModel !== 'rgb') {
+            this.updateRgbDisplay(r, g, b);
+        }
+        
+
+        if (excludeModel !== 'cmyk') {
+            const [c, m, y, k] = ColorConverter.rgbToCmyk(r, g, b);
+            this.updateCmykDisplay(c, m, y, k);
+        }
+
+
+        if (excludeModel !== 'hsv') {
+            const [h, s, v] = ColorConverter.rgbToHsv(r, g, b);
+            this.updateHsvDisplay(h, s, v);
+        }
+        
+
+        this.updateColorVisual(r, g, b);
     }
 
     updateAllDisplays() {
         const [r, g, b] = this.currentRgb;
-        
         this.updateRgbDisplay(r, g, b);
         
         const [c, m, y, k] = ColorConverter.rgbToCmyk(r, g, b);
@@ -354,13 +398,8 @@ class ColorApp {
         this.colorHex.textContent = hex;
         this.colorPicker.value = hex;
     }
-
 }
-
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     new ColorApp();
-
 });

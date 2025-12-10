@@ -403,3 +403,4 @@ class ColorApp {
 document.addEventListener('DOMContentLoaded', () => {
     new ColorApp();
 });
+

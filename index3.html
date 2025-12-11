@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Базовые растровые алгоритмы</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Базовые растровые алгоритмы</h1>
+        
+        <div class="main-section">
+            <div class="left-panel">
+                <div class="input-section">
+                    <h2>Параметры</h2>
+                    
+                    <div class="param-group">
+                        <h3>Линия</h3>
+                        <div class="coord-input">
+                            <label for="x1">X₁:</label>
+                            <input type="number" id="x1" value="50" min="-200" max="200">
+                            <label for="y1">Y₁:</label>
+                            <input type="number" id="y1" value="50" min="-200" max="200">
+                        </div>
+                        <div class="coord-input">
+                            <label for="x2">X₂:</label>
+                            <input type="number" id="x2" value="150" min="-200" max="200">
+                            <label for="y2">Y₂:</label>
+                            <input type="number" id="y2" value="100" min="-200" max="200">
+                        </div>
+                    </div>
+                    
+                    <div class="param-group">
+                        <h3>Окружность</h3>
+                        <div class="coord-input">
+                            <label for="circleX">Координата центра X:</label>
+                            <input type="number" id="circleX" value="0" min="-200" max="200">
+                        </div>
+                        <div class="coord-input">
+                            <label for="circleY">Координата центра Y:</label>
+                            <input type="number" id="circleY" value="0" min="-200" max="200">
+                        </div>
+                        <div class="coord-input">
+                            <label for="radius">Радиус:</label>
+                            <input type="number" id="radius" value="80" min="1" max="150">
+                        </div>
+                    </div>
+                    
+                    <div class="param-group">
+                        <h3>Алгоритм</h3>
+                        <select id="algorithmSelect">
+                            <option value="step">Пошаговый алгоритм</option>
+                            <option value="dda">Алгоритм ЦДА</option>
+                            <option value="bresenham">Алгоритм Брезенхема (линия)</option>
+                            <option value="circle">Алгоритм Брезенхема (окружность)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="param-group">
+                        <h3>Настройки</h3>
+                        <div class="color-input">
+                            <label for="lineColor">Цвет линии:</label>
+                            <input type="color" id="lineColor" value="#ff0000">
+                        </div>
+                        <div class="scale-control">
+                            <label for="scale">Масштаб: <span id="scaleValue"></span></label>
+                            <input type="range" id="scale" min="0.5" max="2" step="0.1" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="drawBtn" class="draw-btn">Нарисовать</button>
+                        <button id="clearBtn" class="clear-btn">Очистить</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="right-panel">
+                <div class="canvas-section">
+                    <h2>Растровый холст</h2>
+                    <canvas id="rasterCanvas" width="800" height="600"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script3.js"></script>
+</body>
+</html>

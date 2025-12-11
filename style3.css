@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #1a2a6c;
+    font-size: 2.2rem;
+}
+
+.deadline {
+    text-align: center;
+    color: #b21f1f;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.main-section {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 25px;
+}
+
+.left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-section, .info-section, .canvas-section, .calculations-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+h2 {
+    color: #b21f1f;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eaeaea;
+}
+
+.param-group {
+    margin-bottom: 20px;
+}
+
+.param-group h3 {
+    color: #1a2a6c;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.coord-input, .color-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0;
+}
+
+.coord-input label, .color-input label {
+    min-width: 60px;
+    font-weight: 500;
+}
+
+input[type="number"], input[type="color"], select {
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: #f8f9fa;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus, select:focus {
+    border-color: #1a2a6c;
+    outline: none;
+}
+
+#algorithmSelect {
+    width: 100%;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.scale-control {
+    margin: 15px 0;
+}
+
+.scale-control label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+#scale {
+    width: 100%;
+}
+
+#scaleValue {
+    color: #b21f1f;
+    font-weight: bold;
+}
+
+.button-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.draw-btn {
+    background: linear-gradient(to right, #1a2a6c, #2a3a8c);
+    color: white;
+}
+
+.clear-btn {
+    background: linear-gradient(to right, #b21f1f, #c23f3f);
+    color: white;
+}
+
+.calc-btn {
+    background: linear-gradient(to right, #1a6c1a, #2a8c2a);
+    color: white;
+}
+
+.time-btn {
+    background: linear-gradient(to right, #8c6c1a, #c29f3f);
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.coordinates {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.time-results {
+    background: #f0f9ff;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+.time-results h3 {
+    color: #1a2a6c;
+    margin-bottom: 10px;
+}
+
+.time-value {
+    color: #b21f1f;
+    font-weight: bold;
+}
+
+.grid-info {
+    background: #fff8f0;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ffd9b3;
+    font-size: 14px;
+}
+
+canvas {
+    width: 100%;
+    border: 3px solid #1a2a6c;
+    border-radius: 8px;
+    background: #ffffff; 
+    display: block;
+    margin: 15px 0;
+}
+
+.calculations-output {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+    .main-section {
+        grid-template-columns: 1fr;
+    }
+}

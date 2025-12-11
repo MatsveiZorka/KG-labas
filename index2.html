@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обработка изображений</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Обработка изображений</h1>
+        
+        <div class="input-section">
+            <h2>Исходное изображение</h2>
+            <div class="image-controls">
+                <input type="file" id="imageInput" accept="image/*">
+                <select id="exampleSelect">
+                    <option value="">Примеры</option>
+                </select>
+            </div>
+            <canvas id="originalCanvas"></canvas>
+        </div>
+        
+        <div class="processing-section">
+            <h2>Параметры обработки</h2>
+            <div class="method-selector">
+                <label>Метод обработки:</label>
+                <select id="methodSelect">
+                    <option value="morphology">Морфологическая обработка</option>
+                    <option value="pixelwise">Поэлементные операции+Линейное контрастирование</option>
+                </select>
+            </div>
+            
+            <div id="morphologyParams" class="params">
+                <h3>Параметры морфологии</h3>
+                <div class="param-group">
+                    <label>Операция:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="erosion" name="morphOperation" value="erosion" checked>
+                        <label for="erosion">Эрозия</label>
+                        <input type="radio" id="dilation" name="morphOperation" value="dilation">
+                        <label for="dilation">Дилатация</label>
+                    </div>
+                </div>
+                <div class="param-group">
+                    <label>Структурирующий элемент:</label>
+                    <select id="structuringElement">
+                        <option value="rect">Прямоугольник</option>
+                        <option value="cross">Крест</option>
+                    </select>
+                </div>
+                <div class="param-group">
+                    <label for="elementSize">Размер ядра:</label>
+                    <input type="number" id="elementSize" min="3" max="15" step="2" value="3">
+                </div>
+            </div>
+            
+            <div id="pixelwiseParams" class="params hidden">
+                <h3>Поэлементные операции</h3>
+                <div class="param-group">
+                    <label for="brightness">Яркость:</label>
+                    <input type="range" id="brightness" min="-100" max="100" value="0">
+                    <span id="brightnessValue">0</span>
+                </div>
+                <div class="param-group">
+                    <label for="contrast">Контраст:</label>
+                    <input type="range" id="contrast" min="-100" max="100" value="0">
+                    <span id="contrastValue">0</span>
+                </div>
+                <div class="param-group">
+                    <input type="checkbox" id="invert">
+                    <label for="invert">Инверсия цветов</label>
+                </div>
+            </div>
+            
+            <button id="applyButton">Применить обработку</button>
+        </div>
+        
+        <div class="output-section">
+            <h2>Результат обработки</h2>
+            <canvas id="resultCanvas"></canvas>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html>
